@@ -2,7 +2,7 @@
 % It demonstrates, in simple terms, the operation of a typical ADC.
 % This code assumes the signal is normalized; between -1 and +1.
 close all % closes any open figures within Matlab
-n=1; % Number of ADC bits;
+n=32; % Number of ADC bits;
 Tsample = 0.001
 ts = 0:Tsample:2;
 x = sin(2*pi*1*ts) % sampled digital signal

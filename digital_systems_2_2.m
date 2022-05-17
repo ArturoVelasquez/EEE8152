@@ -1,38 +1,39 @@
-Ts = 0.1;
-% Define sampling time
-% Define continuous system transfer function a/s+a, where a = 4.
-numS1=[4];
-denS1=[1,4];
-Hs1 = tf(numS1, denS1)
-% Define the numerator of the transfer function (tf)
-% Define the denominator of the tf
-% Define continuous tf, (munerator, denominator)
-% Plot step response of H(s)
-figure(1)
+Tc=0.001;
+t=0:Tc:2;
+Ts=0.1;
+%Ts=0.05;
+%Ts=0.04;
+s_vec=0:Ts:2;
+
+y1=sin(2*pi*t);
+y1_sample=sin(2*pi*s_vec);
+y2=sin(18*pi*t+pi); % 9 hertz + phase shift
+y2_sample=sin(18*pi*s_vec+pi);
+y3=sin(22*pi*t); % 11 hertz
+y3_sample=sin(22*pi*s_vec);
+
+figure("Name","1 Hz")
 hold on
-step(Hs1,'b')
-% define plot
-% Plot response of H(s) to a unit step input response.
-% Define discrete system tf
-numDz1=[1-exp(-4*Ts)];
-denDz1 =[1,-exp(-4*Ts)];
-Hz1 = tf(numDz1,denDz1,Ts)
-% Define the numerator of the discrete tf
-% Define the denominator of the discrete tf
-% Define discrete tf, (num, den, SAMPLING TIME)
-% Plot step response of H(z1)
-step(Hz1,'g')
-text(1,2,'Hz1 - inc effect of sampling')
-% Plot step response
-% Label - text(x-axis co-ord, y-axis co-ord, 'text here')
-% Define WRONG discrete tf, the effect of sampling is no longer accounted for.
-numDz2=[4,0];
-denDz2 =[1,-exp(-4*Ts)];
-Hz2 = tf(numDz2,denDz2,Ts)
-% Define numerator
-% Define denominator
-% Plot step response of H(z2)
-step(Hz2,'r')
-% Plot step response
-text(1,13,'Hz2 - no account of sampling') % Label- text(x-axis co-ord, y-axis co-ord,'text here')
+plot(t,y1)
+stem(s_vec,y1_sample,'C')
+hold off
+
+figure("Name","9 Hz and phase shift")
+hold on
+plot(t,y2)
+stairs(s_vec,y2_sample)
+hold off
+
+figure("Name","11 Hz")
+hold on
+plot(t,y3)
+stairs(s_vec,y3_sample)
+hold off
+
+figure("Name","All samplings")
+hold on
+stairs(s_vec,y1_sample)
+stairs(s_vec,y2_sample)
+stairs(s_vec,y3_sample)
+legend({'x1(t)','x2(t)','x3(t)'},'Location','southwest')
 hold off
